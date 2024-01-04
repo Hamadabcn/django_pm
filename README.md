@@ -1,2 +1,2 @@
 Project management application
-Written in Python and django and few html
+Written in Python, django and HTML
