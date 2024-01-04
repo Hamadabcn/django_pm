@@ -1,10 +1,52 @@
+{% extends 'base.html' %}
 {% load i18n %}
+{% load humanize %}
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit" />
-    </form>
-    <a href="{% url 'Project_delete' object.id %}">Delete</a>
-    {% include 'project/task.html' with project=object %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <h5>
+                    {{ object.title }}
+                </h5>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-3">
+            <form method="POST">
+                <div class="card">
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">{{ field }}</div>
+                        {% endfor %}
+                        <div class="d-flex mt-2">
+                            <span class="me-auto text-muted small">
+                                <i class="bi bi-clock"></i>
+                                <time datetime="{{ object.created_at }}">
+                                    {{ object.created_at|naturaltime }}
+                                </time>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success">
+                                <i class="bi bi-save"></i>
+                                {% trans 'Save' %}
+                            </button>
+                            <button class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                                {% trans 'Delete' %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-9">
+            {% include 'project/task.html' with project=object %}
+        </div>
+    </div>
 {% endblock %}

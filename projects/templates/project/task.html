@@ -1,28 +1,36 @@
 {% load i18n %}
-
-<ul>
+<ul class="list-group">
     {% for task in project.task_set.all %}
-        <li>
-            <form method="post" action="{% url 'Task_update' task.id %}">
+        <li class="list-group-item d-flex">
+            <form method="post" action="{% url 'Task_update' task.id %}" class="my-auto me-2">
                 {% csrf_token %}
                 <input
+                        class="form-check-input"
                         type="checkbox"
                         name="is_completed"
                         {% if task.is_completed %} checked {% endif %}
                         onchange="this.form.submit()"
                 />
-                {{ task.description }}
             </form>
+            <p class="my-auto me-auto">
+                    {{ task.description }}
+            </p>
             <form method="post" action="{% url 'Task_delete' task.id %}">
                 {% csrf_token %}
-                <button type="submit">Delete</button>
+                <button type="submit" class="btn"><i class="bi bi-trash text-danger"></i></button>
             </form>
         </li>
     {% endfor %}
 </ul>
-<form method="post" action="{% url 'Task_create' %}">
-    {% csrf_token %}
-    <input type="hidden" value="{{ project.id }}" name="project">
-    <input type="text" name="description" placeholder="{% trans 'New Task' %}" />
-    <input type="submit" value="{% trans 'Add' %}" />
-</form>
+
+<div class="card mt-2">
+    <form method="post" action="{% url 'Task_create' %}" class="d-flex">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="hidden" value="{{ project.id }}" name="project">
+            <input type="text" name="description" class="form-control" placeholder="{% trans 'New Task' %}" required/>
+            <input type="submit" class="btn btn-outline-dark" value="{% trans 'Add' %}" />
+        </div>
+    </form>
+</div>
+

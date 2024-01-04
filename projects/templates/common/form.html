@@ -1,0 +1,17 @@
+<ul>
+    {% for error in form.non_field_errors %}
+        <li class="list-group-item list-group-item-danger">{{ error|escape }}</li>
+    {% endfor %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <li class="list-group-item list-group-item-danger">{{ error|escape }}</li>
+        {% endfor %}
+    {% endfor %}
+</ul>
+
+{% for field in form %}
+    <div class="mb-3">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+    </div>
+{% endfor %}
