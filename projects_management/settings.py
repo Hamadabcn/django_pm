@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+from django.contrib import staticfiles
+from django.template.context_processors import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +28,7 @@ SECRET_KEY = 'django-insecure-@7h-7b@)jx5s&wy%#x*tqgw=(t))2^96omk-+4x45$d#y))am2
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'django-pm-1308390d5bff.herokuapp.com/', '127.0.0.1', 'localhost'
+    'django-pm-1308390d5bff.herokuapp.com/', '127.0.0.1', 'localhost',
 ]
 
 
