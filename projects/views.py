@@ -1,8 +1,13 @@
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
+from accounts.forms import UserRegisterForm, ProfileForm
 from . import models
 from . import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 
 class ProjectListView(LoginRequiredMixin, ListView):
@@ -64,3 +69,27 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('Project_update', args=[self.object.project.id])
+
+
+class RegisterView(CreateView):
+    form_class = UserRegisterForm
+    # success_url = reverse_lazy('login')
+    template_name = 'registration/register.html'
+
+    def get_success_url(self):
+        login(self.request, self.object)
+        return reverse_lazy('Project_list')
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=request.user)
+        return render(request, 'profile.html', {
+            'form': form
+        })
