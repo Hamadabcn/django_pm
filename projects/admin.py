@@ -13,8 +13,9 @@ class ProjectAdmin(admin.ModelAdmin):
     list_editable = ['status', 'user', 'category']
     list_select_related = ['category', 'user']
 
-    def tasks_count(self, obj):
-         #return obj.task_set.count()
+    @staticmethod
+    def tasks_count(obj):
+        # return obj.task_set.count()
         return obj.tasks_count
 
     def get_queryset(self, request):
