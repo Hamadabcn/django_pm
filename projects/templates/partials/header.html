@@ -23,7 +23,7 @@
               <li>
                 <form action="{% url 'logout' %}" method="post" class="p-3">
                   {% csrf_token %}
-                  <button type="submit" class="btn btn-success">Logout</button>
+                  <button type="submit" class="btn btn-success">{% trans 'Logout' %}</button>
                 </form>
               </li>
             </ul>
